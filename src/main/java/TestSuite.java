@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import github.models.DataType;
 import github.models.RepoInfo;
 import github.services.DataCollector;
 import github.services.GithubDataCollector;
+import github.utils.Reader;
 import static org.junit.Assert.*;
 
 public class TestSuite {
@@ -44,7 +46,21 @@ public class TestSuite {
 		assertArrayEquals(expectedUrls.toArray(), makeUrls(repoInfo).toArray());
 	}
 
+	@Test
+	public void readerReadsDataCorrectly() throws MalformedURLException, IOException {
+		Reader reader = new Reader();
+		String expectedJsonResult = "";
+		String resultingJson = reader.readResource(makeCommitUrl(GITHUB_BASE_URL, repoInfo.getDateTypes()));
+		assertEquals(expectedJsonResult, resultingJson);
+	}
 	
+	@Test
+	public void returnsCommitJsonCorrectly() throws MalformedURLException, IOException {
+		Reader reader = new Reader();
+		String expectedJsonResult = "";
+		String resultingJson = reader.readResource(makeCommitUrl(GITHUB_BASE_URL, repoInfo.getDateTypes()));
+		assertEquals(expectedJsonResult, resultingJson);
+	}
 	
 	private ArrayList<URL> makeUrls(RepoInfo repoInfo) throws MalformedURLException {
 		String baseURL = repoInfo.getBaseURL();

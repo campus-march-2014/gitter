@@ -1,5 +1,6 @@
 package github.services;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import github.models.DataCollection;
 import github.models.DataType;
 import github.models.RepoInfo;
+import github.utils.Reader;
 
 @Service
 public class GithubDataCollector implements DataCollector {
@@ -18,14 +20,20 @@ public class GithubDataCollector implements DataCollector {
 
 	@Override
 	public DataCollection collectData(RepoInfo repoInfo) {
-		// TODO Auto-generated method stub
+		try {
+			String jsonCommits = getCommitJson(repoInfo);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch(IOException e) {
+			
+		}
 		return null;
 	}
 	
 	private URL makeCommitUrl(String baseUrl, Set<DataType> watchedData) throws MalformedURLException {
 		URL commitURL = null;
 		if(watchedData.contains(DataType.COMMIT)) {
-			commitURL = new URL(baseUrl + "/commits");			
+			commitURL = new URL(baseUrl + COMMITS_RESOURCE);			
 		}
 		return commitURL;
 	}
@@ -44,5 +52,11 @@ public class GithubDataCollector implements DataCollector {
 	
 	private boolean shouldWatchCommits(Set<DataType> watchData) {
 		return watchData.contains(DataType.COMMIT);
+	}
+	
+	private String getCommitJson(RepoInfo repoInfo) throws MalformedURLException, IOException {
+		Reader reader = new Reader();
+		String resultingJson = reader.readResource(makeCommitUrl(GITHUB_BASE_URL, repoInfo.getDateTypes()));
+		return resultingJson;
 	}
 }
