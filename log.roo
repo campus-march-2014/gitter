@@ -1,0 +1,33 @@
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-10 16:59:48
+project --topLevelPackage GitHub --projectName GitHubPPush --java 7 --packaging JAR
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-10 17:00:04
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-10 17:02:59
+hint
+jpa setup --database GOOGLE_APP_ENGINE --provider DATANUCLEUS 
+hint
+enum type --class github.models.DataPropertyType
+field string --fieldName type 
+entity jpa --class github.models.DataProperty
+field string --fieldName name
+// [failed] field string --fieldName value
+field string --fieldName value --permitReservedWords 
+field enum --type ~.models.DataPropertyType --fieldName type
+enum type --class github.models.DataType
+field string --fieldName type
+// [failed] entity jpa --class ~.models.Data
+entity jpa --class ~.models.Data --permitReservedWords 
+field set --fieldName fields --type ~.models.DataProperty
+field enum --type ~.models.DataType --fieldName dataType
+entity jpa --class ~.models.DataCollection 
+// [failed] field list --type ~.models.Data --fieldName data
+// [failed] field list --type ~.models.Data --fieldName data --
+field list --type ~.models.Data --fieldName data --permitReservedWords 
+field string --fieldName chanelName 
+entity jpa --class ~.models.RepoInfo 
+field string --fieldName baseURL 
+field set --type ~.models.DataType --fieldName dateTypes 
+hint
+web mvc setup 
+hint
+hint web mvc
+web mvc controller --class github.controllers.Test1 
