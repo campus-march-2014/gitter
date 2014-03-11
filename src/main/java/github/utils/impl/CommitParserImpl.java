@@ -35,32 +35,23 @@ public class CommitParserImpl implements Parser {
         DataCollection dataCollection = new DataCollection();
         try {
         	ArrayList<Object> objects = mapper.readValue(jsonString, typeRef);
-    
         	HashMap<String, Object> hashMap = (HashMap <String, Object>) objects.get(0);
+        	
 			String url = (String) hashMap.get("url");
-        	DataProperty urlProperty = new DataProperty();
-        	urlProperty.setName("CommitURL");
-        	urlProperty.setValue(url);
+        	DataProperty urlProperty = createUrlDataProperty(url);
         	
         	HashMap<String, Object> commit =(HashMap<String, Object>) hashMap.get("commit");
         	HashMap<String, Object> committer = (HashMap<String, Object >) commit.get("committer");
             String committerName = (String) committer.get("name");
-            DataProperty committerNameProperty = new DataProperty();
-            committerNameProperty.setName("CommitterName");
-            committerNameProperty.setValue(committerName);
-            committerNameProperty.setDataPropertyType(DataPropertyType.STRING);
+            DataProperty committerNameProperty = createDataNameProperty(committerName);
             
             String message = (String) commit.get("message");
-            DataProperty committerMessageProperty = new DataProperty();
-            committerMessageProperty.setName("CommitterMessage");
-            committerMessageProperty.setValue(message);
+            DataProperty committerMessageProperty = createCommitterMessageProperty(message);
             
             Data data = createData(urlProperty, committerNameProperty,
 					committerMessageProperty);
-            
             createDataCollection(dataCollection, url, data);
-
-            
+           
  } catch (JsonParseException e) {
   // TODO Auto-generated catch block
   e.printStackTrace();
@@ -73,6 +64,28 @@ public class CommitParserImpl implements Parser {
  }	
  
 return dataCollection;
+	}
+
+	private DataProperty createCommitterMessageProperty(String message) {
+		DataProperty committerMessageProperty = new DataProperty();
+		committerMessageProperty.setName("CommitterMessage");
+		committerMessageProperty.setValue(message);
+		return committerMessageProperty;
+	}
+
+	private DataProperty createDataNameProperty(String committerName) {
+		DataProperty committerNameProperty = new DataProperty();
+		committerNameProperty.setName("CommitterName");
+		committerNameProperty.setValue(committerName);
+		committerNameProperty.setDataPropertyType(DataPropertyType.STRING);
+		return committerNameProperty;
+	}
+
+	private DataProperty createUrlDataProperty(String url) {
+		DataProperty urlProperty = new DataProperty();
+		urlProperty.setName("CommitURL");
+		urlProperty.setValue(url);
+		return urlProperty;
 	}
 
 	private void createDataCollection(DataCollection dataCollection,
