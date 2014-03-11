@@ -7,7 +7,6 @@ import github.models.DataProperty;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect DataProperty_Roo_Jpa_ActiveRecord {
@@ -21,28 +20,24 @@ privileged aspect DataProperty_Roo_Jpa_ActiveRecord {
         return em;
     }
     
-    @Transactional
     public static long DataProperty.countDataPropertys() {
-        return findAllDataPropertys().size();
+        return entityManager().createQuery("SELECT COUNT(o) FROM DataProperty o", Long.class).getSingleResult();
     }
     
-    @Transactional
     public static List<DataProperty> DataProperty.findAllDataPropertys() {
         return entityManager().createQuery("SELECT o FROM DataProperty o", DataProperty.class).getResultList();
     }
     
-    @Transactional
     public static DataProperty DataProperty.findDataProperty(Long id) {
         if (id == null) return null;
         return entityManager().find(DataProperty.class, id);
     }
     
-    @Transactional
     public static List<DataProperty> DataProperty.findDataPropertyEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM DataProperty o", DataProperty.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void DataProperty.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);

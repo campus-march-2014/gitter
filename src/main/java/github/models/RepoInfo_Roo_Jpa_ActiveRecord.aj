@@ -7,7 +7,6 @@ import github.models.RepoInfo;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect RepoInfo_Roo_Jpa_ActiveRecord {
@@ -21,28 +20,24 @@ privileged aspect RepoInfo_Roo_Jpa_ActiveRecord {
         return em;
     }
     
-    @Transactional
     public static long RepoInfo.countRepoInfoes() {
-        return findAllRepoInfoes().size();
+        return entityManager().createQuery("SELECT COUNT(o) FROM RepoInfo o", Long.class).getSingleResult();
     }
     
-    @Transactional
     public static List<RepoInfo> RepoInfo.findAllRepoInfoes() {
         return entityManager().createQuery("SELECT o FROM RepoInfo o", RepoInfo.class).getResultList();
     }
     
-    @Transactional
     public static RepoInfo RepoInfo.findRepoInfo(Long id) {
         if (id == null) return null;
         return entityManager().find(RepoInfo.class, id);
     }
     
-    @Transactional
     public static List<RepoInfo> RepoInfo.findRepoInfoEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM RepoInfo o", RepoInfo.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void RepoInfo.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);

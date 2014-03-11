@@ -16,7 +16,7 @@ privileged aspect DataProperty_Roo_Jpa_Entity {
     declare @type: DataProperty: @Entity;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long DataProperty.id;
     

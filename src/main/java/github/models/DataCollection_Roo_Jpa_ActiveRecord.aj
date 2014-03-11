@@ -7,7 +7,6 @@ import github.models.DataCollection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect DataCollection_Roo_Jpa_ActiveRecord {
@@ -21,28 +20,24 @@ privileged aspect DataCollection_Roo_Jpa_ActiveRecord {
         return em;
     }
     
-    @Transactional
     public static long DataCollection.countDataCollections() {
-        return findAllDataCollections().size();
+        return entityManager().createQuery("SELECT COUNT(o) FROM DataCollection o", Long.class).getSingleResult();
     }
     
-    @Transactional
     public static List<DataCollection> DataCollection.findAllDataCollections() {
         return entityManager().createQuery("SELECT o FROM DataCollection o", DataCollection.class).getResultList();
     }
     
-    @Transactional
     public static DataCollection DataCollection.findDataCollection(Long id) {
         if (id == null) return null;
         return entityManager().find(DataCollection.class, id);
     }
     
-    @Transactional
     public static List<DataCollection> DataCollection.findDataCollectionEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM DataCollection o", DataCollection.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void DataCollection.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);

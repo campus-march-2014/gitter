@@ -16,7 +16,7 @@ privileged aspect RepoInfo_Roo_Jpa_Entity {
     declare @type: RepoInfo: @Entity;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long RepoInfo.id;
     

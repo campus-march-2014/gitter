@@ -7,7 +7,6 @@ import github.models.Data;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect Data_Roo_Jpa_ActiveRecord {
@@ -21,28 +20,24 @@ privileged aspect Data_Roo_Jpa_ActiveRecord {
         return em;
     }
     
-    @Transactional
     public static long Data.countDatas() {
-        return findAllDatas().size();
+        return entityManager().createQuery("SELECT COUNT(o) FROM Data o", Long.class).getSingleResult();
     }
     
-    @Transactional
     public static List<Data> Data.findAllDatas() {
         return entityManager().createQuery("SELECT o FROM Data o", Data.class).getResultList();
     }
     
-    @Transactional
     public static Data Data.findData(Long id) {
         if (id == null) return null;
         return entityManager().find(Data.class, id);
     }
     
-    @Transactional
     public static List<Data> Data.findDataEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Data o", Data.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void Data.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
