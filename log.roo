@@ -34,3 +34,4 @@ web mvc controller --class github.controllers.Test1
 jpa setup --database H2_IN_MEMORY --provider HIBERNATE 
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-11 10:34:23
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-11 10:50:21
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-11 12:16:57
