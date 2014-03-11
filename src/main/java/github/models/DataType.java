@@ -1,7 +1,10 @@
 package github.models;
 
 public enum DataType {
-	COMMIT("commit");
+	COMMIT("commit"),
+	ISSUE("issue"),
+	PULL_REQUEST("pull_request");
+	
 
 	/**
      */

@@ -19,5 +19,5 @@ public class DataCollection {
 
     /**
      */
-    private String chanelName;
+    private String chanelName;    
 }
