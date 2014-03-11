@@ -37,3 +37,5 @@ jpa setup --database H2_IN_MEMORY --provider HIBERNATE
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-11 12:34:21
 entity jpa --class github.utils.Reader 
 interface --class github.utils.Parser
+entity jpa --class github.utils.impl.CommitParserImpl
+entity jpa --class ~.utils.impl.CommitParserImpl --implements ~.utils.Parser
