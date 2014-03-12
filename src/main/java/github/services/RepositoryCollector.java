@@ -55,14 +55,11 @@ public class RepositoryCollector {
 				String html_url = (String) map.get("html_url");
 				RepoInfo repoInfo = new RepoInfo();
 				repoInfo.setBaseURL(html_url);
-				repoInfo.getDateTypes().add(DataType.COMMIT);
-//				repoInfo.getDateTypes().add(DataType.ISSUE);
-//				repoInfo.getDateTypes().add(DataType.PULL_REQUEST);
+				
 				if(!repoInfoAlreadyInDB(repoInfos, repoInfo)){
 					repoInfo.persist();
 				}
 			}
-			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,10 +77,8 @@ public class RepositoryCollector {
 			if(ri.getBaseURL().equals(repoInfo.getBaseURL()) && 
 					ri.getDateTypes().containsAll(repoInfo.getDateTypes())) {
 				return true;
-				
 			}
 		}
 		return false;
 	}
-	
 }
