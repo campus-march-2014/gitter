@@ -56,6 +56,8 @@
         <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    
     
     <!-- Creates the Spring Container shared by all Servlets and Filters -->
     <listener>
