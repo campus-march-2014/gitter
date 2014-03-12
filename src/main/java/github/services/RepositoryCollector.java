@@ -58,6 +58,7 @@ public class RepositoryCollector implements Collector {
 				repoInfosFromUrl.add(repoInfo);
 				if (!repoInfoAlreadyInDB(repoInfos, repoInfo)) {
 					repoInfo.persist();
+					
 				}
 			}
 			repoInfoNotInDB(repoInfosFromUrl, repoInfos);
