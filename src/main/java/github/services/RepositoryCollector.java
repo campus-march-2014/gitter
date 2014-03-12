@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @RooToString
 @RooJpaActiveRecord
 @Service
-public class RepositoryCollector {
+public class RepositoryCollector implements Collector {
 	public static final String url = "https://api.github.com/users/campus-march-2014/repos";
 	
 	public void fetchRepositiries(){
@@ -42,9 +42,9 @@ public class RepositoryCollector {
 	}
 
 	
-	
 	private void getRepoInfos(String resource) {
 		List<RepoInfo> repoInfos = RepoInfo.findAllRepoInfoes();
+		List<RepoInfo> repoInfosFromUrl = new ArrayList<RepoInfo>();
 		JsonFactory factory = new JsonFactory();
         ObjectMapper mapper = new ObjectMapper(factory);
         TypeReference<ArrayList<Object>> typeRef = new TypeReference<ArrayList<Object>>() {};
@@ -58,8 +58,10 @@ public class RepositoryCollector {
 				
 				if(!repoInfoAlreadyInDB(repoInfos, repoInfo)){
 					repoInfo.persist();
+					repoInfosFromUrl.add(repoInfo);
 				}
 			}
+			repoInfoNotInDB(repoInfosFromUrl,repoInfos);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,13 +73,32 @@ public class RepositoryCollector {
 			e.printStackTrace();
 		}
 	}
+	
+	private void repoInfoNotInDB(List<RepoInfo> repoInfosFromUrl,List<RepoInfo> repoInfos){
+		if(repoInfosFromUrl.size() != repoInfos.size()){
+			for(RepoInfo ri : repoInfos){
+			if(repoInfoAlreadyInDB(repoInfosFromUrl,ri )){
+				ri.remove();
+			}
+		}
+	}
+	}
 
 	private boolean repoInfoAlreadyInDB(List<RepoInfo> repoInfos, RepoInfo repoInfo) {
 		for(RepoInfo ri : repoInfos) {
-			if(ri.getBaseURL().equals(repoInfo.getBaseURL()) && 
-					ri.getDateTypes().containsAll(repoInfo.getDateTypes())) {
-				return true;
+			if(equalsRipoInfo(ri,repoInfo)){
+			return true;
 			}
+		}
+		return false;
+	}
+
+
+
+	private boolean equalsRipoInfo(RepoInfo ri, RepoInfo repoInfo) {
+		if(ri.getBaseURL().equals(repoInfo.getBaseURL()) && 
+				ri.getDateTypes().containsAll(repoInfo.getDateTypes())) {
+			return true;
 		}
 		return false;
 	}
