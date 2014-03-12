@@ -47,8 +47,76 @@ public class GithubDataProviderTest {
 		pushData1();
 	}
 	
+	
+	@Test
+	public void pushesAMessageToAChannelCorrectly() {
+		String message;
+		pushMessageToChannel(message, "test");
+	}
+	
 	private void pushData(DataCollection dataCollection) {
-		
+		String pushString = dataCollection.toString();
+		String channelName = dataCollection.getChanelName();
+		pushMessageToChannel(dataCollection.toString(), channelName);
+	}
+	
+	private void pushMessageToChannel(String message, String channelName) {
+		try {
+			 
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			HttpPost postRequest = new HttpPost(SERVICE_SEND_MESSAGE_URL);
+			
+			String encoding = DatatypeConverter.printBase64Binary((USER_CREDENTIALS).getBytes("UTF-8"));
+			postRequest.addHeader("Authorization", "Basic " + encoding);
+			postRequest.addHeader("content-type", "application/json; charset=utf-8");
+			String params = "{" +
+	                "\"notificationMessage\":\""+ message + "\"," +
+	                "\"androidData\":{" +
+	                "\"title\":\"Android\"," +
+	                "\"sound\":\"true\"," +
+	                "\"vibrate\":\"true\"," +
+	                "\"light\":\"true\"" +
+	                "}," +
+	                "\"channelNames\":[" +
+	                "\""+ channelName + "\"" +
+	                "]," +
+	                "\"mimeType\":\"text/plain\"," +
+	                "\"sentType\":\"channels\"," +
+	                "\"OSTypes\":[" +
+	                "\"Android\"" +
+	                "]" +
+	                "}";
+			StringEntity input = new StringEntity(params);
+			input.setContentType("application/json");
+			postRequest.setEntity(input);
+	 
+			HttpResponse response = httpClient.execute(postRequest);
+	 
+			if (response.getStatusLine().getStatusCode() != 201) {
+				throw new RuntimeException("Failed : HTTP error code : "
+					+ response.getStatusLine().getStatusCode());
+			}
+	 
+			BufferedReader br = new BufferedReader(
+	                        new InputStreamReader((response.getEntity().getContent())));
+	 
+			String output;
+			System.out.println("Output from Server .... \n");
+			while ((output = br.readLine()) != null) {
+				System.out.println(output);
+			}
+	 
+			httpClient.getConnectionManager().shutdown();
+	 
+		  } catch (MalformedURLException e) {
+	 
+			e.printStackTrace();
+	 
+		  } catch (IOException e) {
+	 
+			e.printStackTrace();
+	 
+		  }
 	}
 	
 	private void pushData1() {
