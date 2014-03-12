@@ -5,13 +5,13 @@ import github.models.DataType;
 import github.models.RepoInfo;
 import github.services.RepositoryCollector;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,9 +46,36 @@ public class GitterController {
 	@ResponseBody
 	public void fetchFromUI(String proba){
 		String[] data = proba.split(",");
+		HashMap<String, Set<DataType>> repoInfos = new HashMap<>();
 		for(int i= 0; i<data.length;i++)
 		{
-			System.out.println(data[i]);
+			Set<DataType> dataTypes = new HashSet<DataType>();
+			String[] parts = data[i].split(";");
+			String baseURL = parts[0];
+			String dataType = parts[1];
+			
+			if(repoInfos.containsKey(baseURL)){
+				Set<DataType> tempSet = repoInfos.get(baseURL);
+				tempSet.add(DataType.valueOf(dataType));
+				repoInfos.put(baseURL, tempSet);
+				continue;
+			}
+			dataTypes.add(DataType.valueOf(dataType));
+			repoInfos.put(baseURL, dataTypes);
+			
 		}
+		ArrayList<RepoInfo> repoInfoList = new ArrayList<>();
+		Iterator it = repoInfos.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        RepoInfo repo = new RepoInfo();
+			repo.setBaseURL(pairs.getKey().toString());
+			repo.setDateTypes((Set<DataType>) pairs.getValue());
+			repoInfoList.add(repo);
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
+		
+		System.out.println(repoInfoList.toString());
+		
 	}
 }
