@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import github.models.Data;
@@ -32,36 +33,34 @@ public class CommitParserImpl implements Parser {
 
 		JsonFactory factory = new JsonFactory();
 		ObjectMapper mapper = new ObjectMapper(factory);
-		TypeReference<ArrayList<Object>> typeRef = new TypeReference<ArrayList<Object>>() {
-		};
+		TypeReference<ArrayList<Object>> typeRef = new TypeReference<ArrayList<Object>>() {};
 		DataCollection dataCollection = new DataCollection();
-		try {
-
+		try {	
 			ArrayList<Object> objects = mapper.readValue(jsonString, typeRef);
+			String url="";
+			List<Data> list = new ArrayList<Data>();
 
 			for (int i = 0; i < objects.size(); i++) {
-
-				HashMap<String, Object> hashMap = (HashMap<String, Object>) objects
-						.get(i);
-				String url = (String) hashMap.get("url");
+				
+				HashMap<String, Object> hashMap = (HashMap<String, Object>) objects.get(i);
+				url = (String) hashMap.get("url");
 				DataProperty urlProperty = createUrlDataProperty(url);
 
-				HashMap<String, Object> commit = (HashMap<String, Object>) hashMap
-						.get("commit");
-				HashMap<String, Object> committer = (HashMap<String, Object>) commit
-						.get("committer");
+				HashMap<String, Object> commit = (HashMap<String, Object>) hashMap.get("commit");
+				HashMap<String, Object> committer = (HashMap<String, Object>) commit.get("committer");
+				
 				String committerName = (String) committer.get("name");
 				DataProperty committerNameProperty = createDataNameProperty(committerName);
-
+				
 				String message = (String) commit.get("message");
 				DataProperty committerMessageProperty = createCommitterMessageProperty(message);
 
-				Data data = createData(urlProperty, committerNameProperty,
-						committerMessageProperty);
-				createDataCollection(dataCollection, url, data);
-
+				Data data = createData(urlProperty, committerNameProperty,committerMessageProperty);
+				
+				list.add(data);
 			}
-
+			getChanel(dataCollection, url);
+			dataCollection.setData(list);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,6 +73,12 @@ public class CommitParserImpl implements Parser {
 		}
 
 		return dataCollection;
+	}
+
+	private void getChanel(DataCollection dataCollection, String url) {
+		String[] splittedUrl = url.split("/");
+		String channel = splittedUrl[5];
+		dataCollection.setChanelName(channel);
 	}
 
 	private DataProperty createCommitterMessageProperty(String message) {
@@ -102,27 +107,13 @@ public class CommitParserImpl implements Parser {
 			DataProperty committerNameProperty,
 			DataProperty committerMessageProperty) {
 		Set<DataProperty> commitPropertiesSet = new HashSet<DataProperty>();
-
 		commitPropertiesSet.add(urlProperty);
 		commitPropertiesSet.add(committerNameProperty);
 		commitPropertiesSet.add(committerMessageProperty);
-
 		Data data = new Data();
 		data.setFields(commitPropertiesSet);
 		data.setDataType(DataType.COMMIT);
 		return data;
-	}
-
-	private void createDataCollection(DataCollection dataCollection,
-			String url, Data data) {
-		ArrayList<Data> commitData = new ArrayList<Data>();
-		commitData.add(data);
-
-		String[] words = url.split("/");
-		String chanel = words[5];
-
-		dataCollection.setData(commitData);
-		dataCollection.setChanelName(chanel);
 	}
 
 }
