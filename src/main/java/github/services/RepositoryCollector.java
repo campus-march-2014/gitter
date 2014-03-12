@@ -42,6 +42,10 @@ public class RepositoryCollector implements Collector {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 7173bf7c08fedf1fe307c2bca9219a0bc8301110
 	private void getRepoInfos(String resource) {
 		List<RepoInfo> repoInfos = RepoInfo.findAllRepoInfoes();
 		List<RepoInfo> repoInfosFromUrl = new ArrayList<RepoInfo>();
