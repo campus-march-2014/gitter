@@ -43,7 +43,7 @@ public class ExampleJsonController {
 	
 	@RequestMapping("/fetchAll")
 	@ResponseBody
-	public List<RepoInfo>fetchAll(){
+	public Map<String, Object>fetchAll(){
 		RepositoryCollector repositoryCollector = new RepositoryCollector();
 		repositoryCollector.fetchRepositiries();
 		RepoInfo r = new RepoInfo();
@@ -52,9 +52,9 @@ public class ExampleJsonController {
 		  uiModel.put("repoInfo", RepoInfo.findAllRepoInfoes());
 		  uiModel.put("dataType", DataType.values());
 		   
-		  //return uiModel;  
+		  return uiModel;  
 
-			return RepoInfo.findAllRepoInfoes();
+			//return RepoInfo.findAllRepoInfoes();
 		
 	}
 
