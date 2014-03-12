@@ -20,7 +20,7 @@
 <body>
 <h1 class="text-center">Admin panel</h1>
 
-<div class="container-fluid" id="taidinteble-container">
+<div class="container-fluid" id="table-container">
     <table class="table table-bordered" id="repositories">
         <thead>
         <tr>
@@ -46,37 +46,31 @@
 <script language="javascript">
     $(document).ready(function () {
 
-//        $('#dodaj').click(function(){
-//            var $tr = $('#repositories tbody tr:first-child').clone();
-//
-//            $($tr).data('broj', Math.random());
-//            $('#repositories tbody').append($tr);
-//        });
-
         $('.refresh').click(function(){
-           window.location.reload();
+            var $this = $(this);
+            $this.attr('disabled', 'disabled').html("Loading...");
+            location.reload(true);
+            $this.attr('enable', 'enable');
         });
 
         $('.collect').click(function(){
-            console.log('klikan');
-
+            var nazivi = "";
             $('input[type=checkbox]').each(function () {
                 if(this.checked == true){
                     var sThisVal = $(this).val();
-                    console.log(sThisVal);
-
-                    //console.log(parent.data('info'));
+                    nazivi = nazivi.concat(sThisVal).concat(',');
                 }
             });
+            console.log(nazivi);
+            $.post("gitter/fetchFromUI", { proba: nazivi });
 
         });
 
-        $.get('examplejson/fetchAll').done(function(data){
+        $.get('gitter/fetchAll').done(function(data){
 
-            //console.log(data.length);
             console.log(data);
-            var $prvi;
-            var $drugi;
+            var $prvi = "";
+            var $drugi = "";
             $.each(data, function(key, value){
                 if(key == 'repoInfo'){
                     $prvi  = value;
@@ -92,20 +86,15 @@
                         var $ime = value.split("/");
                         var $row = '<tr><td>'.concat($ime[$ime.length-1]).concat('</td><td>');
                         var $events="";
-                        //$('#repositories tbody').append($row);
-                        $.each($dugi, function(index, newElement){
-                           var $boxValue = $ime[$ime.length-1].concat(('/')).concat(newElement);
+                        $.each($drugi, function(index, newElement){
+                           var $boxValue = value.concat((';')).concat(newElement);
                             $events = ' <label class="checkbox-inline"><input type="checkbox" value="'.concat($boxValue).concat('">').concat(newElement).concat('</label>');
                             $row = $row.concat($events);
-                            //$('#repositories tbody').append($events);
                         });
                         $row.concat('</td></tr>');
                         $('#repositories tbody').append($row);
                     }
-
                 });
-              //  var $temp = $( $('#template').jqote(repoInfo)).appendTo($('#repositories tbody'));
-               // $($temp).data('info', repoInfo);
             });
         });
     });
