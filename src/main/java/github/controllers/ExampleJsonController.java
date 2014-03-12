@@ -44,6 +44,8 @@ public class ExampleJsonController {
 	@RequestMapping("/fetchAll")
 	@ResponseBody
 	public Collection<RepoInfo> fetchAll(){
+		RepositoryCollector repositoryCollector = new RepositoryCollector();
+		repositoryCollector.fetchRepositiries();
 		RepoInfo r = new RepoInfo();
 
 			return RepoInfo.findAllRepoInfoes();
