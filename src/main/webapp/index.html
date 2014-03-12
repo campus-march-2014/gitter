@@ -72,31 +72,44 @@
         });
 
         $.get('examplejson/fetchAll').done(function(data){
-            var $prvi = $(data).get(0);
-            console.log(data.length);
+
+            //console.log(data.length);
             console.log(data);
-            $.each(data, function( index, repoInfo ) {
-                var $temp = $( $('#template').jqote(repoInfo)).appendTo($('#repositories tbody'));
-                $($temp).data('info', repoInfo);
+            var $prvi;
+            var $drugi;
+            $.each(data, function(key, value){
+                if(key == 'repoInfo'){
+                    $prvi  = value;
+                }
+                if(key == 'dataType'){
+                    $drugi = value;
+                }
+            });
+
+            $.each($prvi, function( index, element ) {
+                $.each(element, function(key, value){
+                    if(key == 'baseURL'){
+                        var $ime = value.split("/");
+                        var $row = '<tr><td>'.concat($ime[$ime.length-1]).concat('</td><td>');
+                        var $events="";
+                        //$('#repositories tbody').append($row);
+                        $.each($dugi, function(index, newElement){
+                           var $boxValue = $ime[$ime.length-1].concat(('/')).concat(newElement);
+                            $events = ' <label class="checkbox-inline"><input type="checkbox" value="'.concat($boxValue).concat('">').concat(newElement).concat('</label>');
+                            $row = $row.concat($events);
+                            //$('#repositories tbody').append($events);
+                        });
+                        $row.concat('</td></tr>');
+                        $('#repositories tbody').append($row);
+                    }
+
+                });
+              //  var $temp = $( $('#template').jqote(repoInfo)).appendTo($('#repositories tbody'));
+               // $($temp).data('info', repoInfo);
             });
         });
     });
 </script>
 
-<script type="text/html" id="template">
-    <![CDATA[
-    <tr>
-        <% $name = this.baseURL.split("/"); %>
-        <td><%= $name[$name.length-1] %></td>
-        <td>
-            <% for ( index in this.dateTypes) {%>
-            <% $value = $name[$name.length-1].concat(('/')).concat(this.dateTypes[index]) ; %>
-            <label class="checkbox-inline">
-                <input type="checkbox" value="<%= $value %>"><%= this.dateTypes[index] %>
-            </label>
-            <% }; %>
-        </td>
-    </tr>
-    ]]>
-</script>
+
 </html>
