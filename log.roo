@@ -37,3 +37,13 @@ jpa setup --database H2_IN_MEMORY --provider HIBERNATE
 entity jpa --class ~.utils.impl.RepositoryParser
 entity jpa --class ~.services.RepositoryCollector
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-11 23:42:18
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-12 16:21:36
+hint
+// [failed] entity jpa --class github.Test2 --testAutomatically 
+// [failed] entity jpa --class github.Deny --testAutomatically 
+// [failed] entity jpa --class github.Deny --testAutomatically 
+// [failed] entity jpa --class github.Deny --testAutomatically true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-12 16:29:20
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-12 16:29:42
+entity jpa --class github.Deny --testAutomatically true
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-12 16:30:17
