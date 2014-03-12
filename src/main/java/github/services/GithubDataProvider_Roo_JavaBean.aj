@@ -15,6 +15,10 @@ privileged aspect GithubDataProvider_Roo_JavaBean {
         return this.SERVICE_CHANNELS_LIST_URL;
     }
     
+    public String GithubDataProvider.getSERVICE_SEND_MESSAGE_URL() {
+        return this.SERVICE_SEND_MESSAGE_URL;
+    }
+    
     public String GithubDataProvider.getUSER_CREDENTIALS() {
         return this.USER_CREDENTIALS;
     }

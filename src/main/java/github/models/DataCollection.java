@@ -29,9 +29,9 @@ public class DataCollection {
     	StringBuilder stringBuilder = new StringBuilder("");
     	for(Data d : data) {
     		if(d.getDataType() == DataType.COMMIT) {
-    			stringBuilder.append("Commiter: " + d.getPropertyByName("CommitterName") + "\n");
-    			stringBuilder.append("CommitURL" + d.getPropertyByName("CommitURL") + "\n");
-    			stringBuilder.append("Message" + d.getPropertyByName("message") + "\n");
+    			stringBuilder.append("Commiter: " + d.getPropertyByName("CommitterName").getValue() + "\\n");
+    			stringBuilder.append("CommitURL: " + d.getPropertyByName("CommitURL").getValue() + "\\n");
+    			stringBuilder.append("Message: " + d.getPropertyByName("CommitterMessage").getValue());
     		}
     	}
     	

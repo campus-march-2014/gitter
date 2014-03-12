@@ -2,14 +2,21 @@ package github.services;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.bind.DatatypeConverter;
 
 import github.models.DataCollection;
+import github.models.DataType;
+import github.models.RepoInfo;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -21,12 +28,13 @@ import org.springframework.roo.addon.tostring.RooToString;
 public class GithubDataProvider implements DataProvider {
 	private final String APPLICATION_ID = "b4de07150619";
 	private final String SERVICE_CHANNELS_LIST_URL = "https://pushapi.infobip.com/1/application/" + APPLICATION_ID + "/channels";
+	private final String SERVICE_SEND_MESSAGE_URL = "https://pushapi.infobip.com/3/application/" + APPLICATION_ID + "/message";
 	private final String USER_CREDENTIALS = "pushdemo:pushdemo";
 
 	@Override
 	public String sendData(DataCollection dataCollection) {
-		// TODO Auto-generated method stub
-		return null;
+		pushData(dataCollection);
+		return dataCollection.toString();
 	}
 	
 	private String retrieveChannels() throws IOException {
@@ -54,5 +62,61 @@ public class GithubDataProvider implements DataProvider {
 		}
 		
 		return null;
+	}
+	
+	private void pushData(DataCollection dataCollection) {
+		String pushString = dataCollection.toString();
+		String channelName = dataCollection.getChanelName();
+		pushMessageToChannel(pushString, channelName);
+	}
+	
+	private void pushMessageToChannel(String message, String channelName) {
+		try {
+			 
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			HttpPost postRequest = new HttpPost(SERVICE_SEND_MESSAGE_URL);
+			
+			String encoding = DatatypeConverter.printBase64Binary((USER_CREDENTIALS).getBytes("UTF-8"));
+			postRequest.addHeader("Authorization", "Basic " + encoding);
+			postRequest.addHeader("content-type", "application/json; charset=utf-8");
+			String params = "{" +
+	                "\"notificationMessage\":\"" + message + "\"," +
+	                "\"androidData\":{" +
+	                "\"title\":\"Android\"," +
+	                "\"sound\":\"true\"," +
+	                "\"vibrate\":\"true\"," +
+	                "\"light\":\"true\"" +
+	                "}," +
+	                "\"channelNames\":[" +
+	                "\"" + channelName + "\"" +
+	                "]," +
+	                "\"mimeType\":\"text/plain\"," +
+	                "\"sentType\":\"channels\"," +
+	                "\"OSTypes\":[" +
+	                "\"Android\"" +
+	                "]" +
+	                "}";
+			StringEntity input = new StringEntity(params);
+			input.setContentType("application/json");
+			postRequest.setEntity(input);
+	 
+			HttpResponse response = httpClient.execute(postRequest);
+	 
+			if (response.getStatusLine().getStatusCode() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+					+ response.getStatusLine().getStatusCode());
+			}
+	 
+			httpClient.getConnectionManager().shutdown();
+	 
+		  } catch (MalformedURLException e) {
+	 
+			e.printStackTrace();
+	 
+		  } catch (IOException e) {
+	 
+			e.printStackTrace();
+	 
+		  }
 	}
 }
