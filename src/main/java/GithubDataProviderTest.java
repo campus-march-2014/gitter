@@ -1,3 +1,4 @@
+import github.models.Data;
 import github.models.DataCollection;
 
 import java.io.BufferedReader;
@@ -47,7 +48,7 @@ public class GithubDataProviderTest {
 	}
 	
 	private void pushData(DataCollection dataCollection) {
-		String channel = dataCollection.getChanelName();
+		
 	}
 	
 	private void pushData1() {
