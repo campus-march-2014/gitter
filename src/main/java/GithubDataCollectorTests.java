@@ -8,14 +8,17 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.apache.commons.codec.binary.Base64;
+
 import github.models.DataType;
 import github.models.RepoInfo;
 import github.services.DataCollector;
 import github.services.GithubDataCollector;
 import github.utils.Reader;
+
 import static org.junit.Assert.*;
 
-public class TestSuite {
+public class GithubDataCollectorTests {
 	public static final String COMMITS_RESOURCE = "/commits";
 	public static final String GITHUB_BASE_URL = "https://api.github.com/repos/campus-march-2014/gitter";
 	RepoInfo repoInfo;
@@ -85,4 +88,5 @@ public class TestSuite {
 		}
 		return commitURL;
 	}
+
 }

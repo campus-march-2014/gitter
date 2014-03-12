@@ -1,17 +1,26 @@
 package github.services;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Set;
 
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.stereotype.Service;
 
 import github.models.DataCollection;
 import github.models.DataType;
 import github.models.RepoInfo;
+import github.utils.Parser;
 import github.utils.Reader;
+import github.utils.impl.CommitParserImpl;
 
 @Service
 public class GithubDataCollector implements DataCollector {
@@ -22,10 +31,14 @@ public class GithubDataCollector implements DataCollector {
 	public DataCollection collectData(RepoInfo repoInfo) {
 		try {
 			String jsonCommits = getCommitJson(repoInfo);
+			Parser commitParser = new CommitParserImpl();
+			DataCollection commitDataCollection = commitParser.parseData(jsonCommits);
+			return commitDataCollection;
 		} catch (MalformedURLException e) {
+			System.err.println(e);
 			e.printStackTrace();
 		} catch(IOException e) {
-			
+			System.err.println(e);
 		}
 		return null;
 	}
