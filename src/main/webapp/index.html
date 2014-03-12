@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<h1 class="text-center">Admin panel</h1>
+
+<div class="container-fluid" id="taidinteble-container">
+    <table class="table table-bordered" id="repositories">
+        <thead>
+        <tr>
+            <th class="text-center">Repository name</th>
+            <th class="text-center">Events</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div class="container-fluid" id="div_buttons">
+    <button type="button" class="btn btn-info refresh">Refresh</button>
+    <button type="button" class="btn btn-success collect">Collect</button>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jqote.js"></script>
+</body>
+
+<script language="javascript">
+    $(document).ready(function () {
+
+//        $('#dodaj').click(function(){
+//            var $tr = $('#repositories tbody tr:first-child').clone();
+//
+//            $($tr).data('broj', Math.random());
+//            $('#repositories tbody').append($tr);
+//        });
+
+        $('.refresh').click(function(){
+           window.location.reload();
+        });
+
+        $('.collect').click(function(){
+            console.log('klikan');
+
+            $('input[type=checkbox]').each(function () {
+                if(this.checked == true){
+                    var sThisVal = $(this).val();
+                    console.log(sThisVal);
+
+                    //console.log(parent.data('info'));
+                }
+            });
+
+        });
+
+        $.get('examplejson/fetchAll').done(function(data){
+
+            //console.log(data.length);
+            console.log(data);
+            var $prvi;
+            var $drugi;
+            $.each(data, function(key, value){
+                if(key == 'repoInfo'){
+                    $prvi  = value;
+                }
+                if(key == 'dataType'){
+                    $drugi = value;
+                }
+            });
+
+            $.each($prvi, function( index, element ) {
+                $.each(element, function(key, value){
+                    if(key == 'baseURL'){
+                        var $ime = value.split("/");
+                        var $row = '<tr><td>'.concat($ime[$ime.length-1]).concat('</td><td>');
+                        var $events="";
+                        //$('#repositories tbody').append($row);
+                        $.each($dugi, function(index, newElement){
+                           var $boxValue = $ime[$ime.length-1].concat(('/')).concat(newElement);
+                            $events = ' <label class="checkbox-inline"><input type="checkbox" value="'.concat($boxValue).concat('">').concat(newElement).concat('</label>');
+                            $row = $row.concat($events);
+                            //$('#repositories tbody').append($events);
+                        });
+                        $row.concat('</td></tr>');
+                        $('#repositories tbody').append($row);
+                    }
+
+                });
+              //  var $temp = $( $('#template').jqote(repoInfo)).appendTo($('#repositories tbody'));
+               // $($temp).data('info', repoInfo);
+            });
+        });
+    });
+</script>
+
+
+</html>
