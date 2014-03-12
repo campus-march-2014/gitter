@@ -29,41 +29,6 @@
         </tr>
         </thead>
         <tbody>
-        <!--<tr>-->
-            <!--<td>jfjdhfighfutofnhdgdugorfnschfikrfjdbcdu</td>-->
-            <!--<td>-->
-                <!--<label class="checkbox-inline">-->
-                    <!--<input type="checkbox" id="chbCommit1" value="option1"> COMMIT-->
-                <!--</label>-->
-                <!--<label class="checkbox-inline">-->
-                    <!--<input type="checkbox" id="chbIssues1" value="option2"> ISSUES-->
-                <!--</label>-->
-                <!--<label class="checkbox-inline">-->
-                    <!--<input type="checkbox" id="chbPullRequest1" value="option3"> PULL REQUEST-->
-                <!--</label>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td>Repo2</td>-->
-            <!--<td>-->
-                <!--<label class="checkbox-inline">-->
-                    <!--<input type="checkbox" id="chbCommit2" value="option1"> COMMIT-->
-                <!--</label>-->
-                <!--<label class="checkbox-inline">-->
-                    <!--<input type="checkbox" id="chbIssues2" value="option2"> ISSUES-->
-                <!--</label>-->
-                <!--<label class="checkbox-inline">-->
-                    <!--<input type="checkbox" id="chbPullRequest2" value="option3"> PULL REQUEST-->
-                <!--</label>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--<tr id="new_row">-->
-            <!--<script>-->
-                <!--function fun() {-->
-                    <!--document.getElementById("new_row").innerHTML = "<td>Jasmina</td> <td><label class='checkbox-inline'> <input type='checkbox' id='chbCommit2' value='option1'> COMMIT </label> <label class='checkbox-inline'><input type='checkbox' id='chbIssues2' value='option2'> ISSUES </label> <label class='checkbox-inline'> <input type='checkbox' id='chbPullRequest2' value='option3'> PULL REQUEST </label></td>";-->
-                <!--}-->
-            <!--</script>-->
-        <!--</tr>-->
         </tbody>
     </table>
 </div>
@@ -94,10 +59,18 @@
 
         $('.collect').click(function(){
             console.log('klikan');
-            $('td input:checked', $('#repositories tbody tr')).each(function(idx, elem){
-                console.log($(elem).closest('tr').data('broj'));
+
+            $('input[type=checkbox]').each(function () {
+                if(this.checked == true){
+                    var sThisVal = $(this).val();
+                    console.log(sThisVal);
+
+                    //console.log(parent.data('info'));
+                }
             });
+
         });
+
         $.get('examplejson/fetchAll').done(function(data){
             var $prvi = $(data).get(0);
             console.log(data.length);
@@ -117,8 +90,9 @@
         <td><%= $name[$name.length-1] %></td>
         <td>
             <% for ( index in this.dateTypes) {%>
+            <% $value = $name[$name.length-1].concat(('/')).concat(this.dateTypes[index]) ; %>
             <label class="checkbox-inline">
-                <input type="checkbox" id="chbCommit2" value="option1"><%= this.dateTypes[index] %>
+                <input type="checkbox" value="<%= $value %>"><%= this.dateTypes[index] %>
             </label>
             <% }; %>
         </td>
