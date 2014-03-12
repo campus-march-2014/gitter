@@ -20,7 +20,7 @@
 <body>
 <h1 class="text-center">Admin panel</h1>
 
-<div class="container-fluid" id="taidinteble-container">
+<div class="container-fluid" id="table-container">
     <table class="table table-bordered" id="repositories">
         <thead>
         <tr>
@@ -54,19 +54,19 @@
         });
 
         $('.collect').click(function(){
-            var array = [];
+            var nazivi = "";
             $('input[type=checkbox]').each(function () {
                 if(this.checked == true){
                     var sThisVal = $(this).val();
-                    array.push(sThisVal);
+                    nazivi = nazivi.concat(sThisVal).concat(',');
                 }
             });
-            console.log(array);
-            $.post('examplejson/collectFromUI', "Jkolonic");
+            console.log(nazivi);
+            $.post("gitter/fetchFromUI", { proba: nazivi });
 
         });
 
-        $.get('examplejson/fetchAll').done(function(data){
+        $.get('gitter/fetchAll').done(function(data){
 
             console.log(data);
             var $prvi = "";
