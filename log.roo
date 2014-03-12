@@ -35,3 +35,7 @@ jpa setup --database H2_IN_MEMORY --provider HIBERNATE
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-11 10:34:23
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-11 10:50:21
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-11 12:16:57
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-12 00:10:38
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-12 10:14:16
+interface --class github.services.DataProvider
+entity jpa --class github.services.impl.GithubDataProvider --implements ~.services.DataProvider
