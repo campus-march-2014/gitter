@@ -42,3 +42,4 @@ entity jpa --class github.services.impl.GithubDataProvider --implements ~.servic
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-12 22:05:44// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-13 14:50:51
 hint
 hint
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-13 15:44:08
