@@ -1,4 +1,10 @@
-package github.utils.impl;
+package github.services.parser;
+
+import github.models.Data;
+import github.models.DataCollection;
+import github.models.DataProperty;
+import github.models.DataPropertyType;
+import github.models.DataType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,25 +13,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import github.models.Data;
-import github.models.DataCollection;
-import github.models.DataProperty;
-import github.models.DataPropertyType;
-import github.models.DataType;
-import github.utils.Parser;
-
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.stereotype.Service;
 
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
+@Service
 public class CommitParserImpl implements Parser {
 
 	@Override

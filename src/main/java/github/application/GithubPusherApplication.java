@@ -1,4 +1,12 @@
 package github.application;
+import github.models.Data;
+import github.models.DataType;
+import github.models.RepoInfo;
+import github.services.DataCollector;
+import github.services.DataProvider;
+import github.services.GithubDataCollector;
+import github.services.GithubDataProvider;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -6,25 +14,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import github.models.DataType;
-import github.models.RepoInfo;
-import github.services.DataCollector;
-import github.services.DataProvider;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
 @Service
-public class GithubPusherApplication implements Application {
+public class GithubPusherApplication {
     private static final int THREAD_COUNT = 1;
     private static final long DEFAULT_DELAY = 0L;
     private static final long DEFAULT_PERIOD = 10;
@@ -38,27 +33,20 @@ public class GithubPusherApplication implements Application {
     @Autowired
     private DataCollector dataCollector;
 
-    @Override
-    @PostConstruct
+    @Scheduled(fixedRate=15000)
     public void run(){
-    	System.out.println("POKRENUTA RUN METODA");
-        this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-            	//List<RepoInfo> repoInfos = RepoInfo.findAllRepoInfoes();
-            	//for(RepoInfo ri : repoInfos) {
-            		RepoInfo ri = new RepoInfo();
-            		Set<DataType> dataTypes = new HashSet<DataType>();
-            		dataTypes.add(DataType.COMMIT);
-            		dataProvider.sendData(dataCollector.collectData(ri));
-            	//}
-            }
-        }, DEFAULT_DELAY, DEFAULT_PERIOD, DEFAULT_TIME_UNIT);
+        //List<RepoInfo> repoInfos = RepoInfo.findAllRepoInfoes();
+    	//for(RepoInfo ri : repoInfos) {
+    	RepoInfo ri = new RepoInfo();
+    	Set<DataType> dataTypes = new HashSet<>();
+    	dataTypes.add(DataType.COMMIT);
+    	ri.setDateTypes(dataTypes);
+    		dataProvider.sendData(dataCollector.collectData(ri));
+    	//}
     }
-
-    @Override
-    public void stop() {
-        this.scheduledExecutorService.shutdown();
-    }
+//    @Scheduled(fixedRate=5000)
+//    public void stop() {
+//    	System.out.println("NESTO SE DOGADJA");
+//    }
 
 }

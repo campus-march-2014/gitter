@@ -1,31 +1,21 @@
 package github.services;
+import github.models.DataCollection;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.xml.bind.DatatypeConverter;
 
-import github.models.DataCollection;
-import github.models.DataType;
-import github.models.RepoInfo;
-
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.stereotype.Service;
 
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
 @Service
 public class GithubDataProvider implements DataProvider {
 	private final String APPLICATION_ID = "b4de07150619";
@@ -68,6 +58,9 @@ public class GithubDataProvider implements DataProvider {
 	
 	private void pushData(DataCollection dataCollection) {
 		String pushString = dataCollection.toString();
+		pushString = pushString.replaceAll("\\s", " ");
+//		pushString = pushString.replaceAll("(?=[]\\[+&|!(){}^\"~*?:\\\\-])", "\\\\");
+//		pushString = pushString.substring(0, 100);
 		String channelName = dataCollection.getChanelName();
 		channelName = "test";
 		pushMessageToChannel(pushString, channelName);
