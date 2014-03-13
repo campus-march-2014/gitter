@@ -44,8 +44,8 @@ public class GitterController {
 	
 	@RequestMapping("/fetchFromUI")
 	@ResponseBody
-	public void fetchFromUI(String proba){
-		String[] data = proba.split(",");
+	public void fetchFromUI(String collectedEvents){
+		String[] data = collectedEvents.split(",");
 		HashMap<String, Set<DataType>> repoInfos = new HashMap<>();
 		for(int i= 0; i<data.length;i++)
 		{
