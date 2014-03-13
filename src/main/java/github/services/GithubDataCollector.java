@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GithubDataCollector implements DataCollector {
 	public static final String COMMITS_RESOURCE = "/commits";
-	public static final String GITHUB_BASE_URL = "https://api.github.com/repos/campus-march-2014/gitter";
+	public static final String GITHUB_GITTER_BASE_URL = "https://api.github.com/repos/campus-march-2014/gitter";
 
 	@Override
 	public DataCollection collectData(RepoInfo repoInfo) {
@@ -62,7 +62,7 @@ public class GithubDataCollector implements DataCollector {
 	
 	private String getCommitJson(RepoInfo repoInfo) throws MalformedURLException, IOException {
 		DefaultReader reader = new DefaultReader();
-		String resultingJson = reader.readResource(makeCommitUrl(GITHUB_BASE_URL, repoInfo.getDateTypes()));
+		String resultingJson = reader.readResource(makeCommitUrl(repoInfo.getBaseURL(), repoInfo.getDateTypes()));
 		return resultingJson;
 	}
 }
