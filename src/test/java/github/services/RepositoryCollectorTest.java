@@ -6,6 +6,7 @@ import java.util.List;
 import github.models.RepoInfo;
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,16 +23,20 @@ public class RepositoryCollectorTest {
 
 	@Before
 	public void setup() {
-	}
-
-	@Test
-	public void CheksremovefromBase() {
 		RepoInfo repoInfo1 = new RepoInfo();
 		repoInfo1.setBaseURL("info1");
 		repoInfo1.persist();
 		RepoInfo repoInfo2 = new RepoInfo();
 		repoInfo2.setBaseURL("info2");
 		repoInfo2.persist();
+	}
+	@Test
+	public void checksNumberOfRows() {
+		Assert.assertEquals(2, RepoInfo.countRepoInfoes());
+	}
+	
+	@Test
+	public void checksRemoveFromBase() {
 		List<RepoInfo> base = RepoInfo.findAllRepoInfoes();
 		List<RepoInfo> lista = new ArrayList<RepoInfo>();
 		RepoInfo repoInfo = new RepoInfo();
@@ -56,12 +61,20 @@ public class RepositoryCollectorTest {
 	}
 
 	@Test
-	public void checkssizetwoinBase() {
-
-		RepoInfo repoInfo2 = new RepoInfo();
-		repoInfo2.setBaseURL("info2");
-		repoInfo2.persist();
-
+	public void checksUpdate() {
+		List<RepoInfo> repos = RepoInfo.findAllRepoInfoes();
+		RepoInfo repoInfo = repos.get(0);
+		repoInfo.setBaseURL("a");
+		repoInfo.merge();
+		Assert.assertEquals("a", RepoInfo.findAllRepoInfoes().get(0).getBaseURL());
 		Assert.assertEquals(2, RepoInfo.countRepoInfoes());
+	}
+	
+	@After
+	public void destry(){
+		List<RepoInfo> repos = RepoInfo.findAllRepoInfoes();
+		for(RepoInfo ri : repos){
+			ri.remove();
+		}
 	}
 }
