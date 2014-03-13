@@ -47,18 +47,8 @@ public class Tests {
 		 * 		postavi ovaj element u rezultujuci filteredDataCollection
 		 * posalji filteredDataCollection na PUSH.
 		 */
-		String dateString = lastCommitDateCollection.getData().get(0).getPropertyByName("CommitDate").getValue();
-	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-	    Date lastCommitDate =  df.parse(dateString); 
-		DataCollection filteredDataCollection = new DataCollection();
-		List<Data> newCommits = new ArrayList<Data>();
-		for(Data d : commitDataCollection.getData()) {
-			Date date = df.parse(d.getPropertyByName("CommitDate").getValue());
-			if(lastCommitDate.before(date)) {
-				newCommits.add(d);
-			}
-		}
-		filteredDataCollection.setData(newCommits);
+		//filterAlreadySentCommitsFromNewCommits(commitDataCollection,
+				//lastCommitDateCollection);
 	}
 	
 	private String getCommitJson(RepoInfo repoInfo) throws MalformedURLException, IOException {
