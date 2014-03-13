@@ -46,11 +46,14 @@ public class CommitParserImpl implements Parser {
 				
 				String committerName = (String) committer.get("name");
 				DataProperty committerNameProperty = createDataNameProperty(committerName);
+		
+				String commitDate = (String) committer.get("date");
+				DataProperty commitDateDataProperty = createDateDataProperty(commitDate);
 				
 				String message = (String) commit.get("message");
 				DataProperty committerMessageProperty = createCommitterMessageProperty(message);
 
-				Data data = createData(urlProperty, committerNameProperty,committerMessageProperty);
+				Data data = createData(urlProperty, committerNameProperty,committerMessageProperty, commitDateDataProperty);
 				
 				list.add(data);
 			}
@@ -97,14 +100,23 @@ public class CommitParserImpl implements Parser {
 		urlProperty.setValue(url);
 		return urlProperty;
 	}
+	
+	private DataProperty createDateDataProperty(String lastCommitDate) {
+		DataProperty commitDateProperty = new DataProperty();
+		commitDateProperty.setName("CommitDate");
+		commitDateProperty.setValue(lastCommitDate.toString());
+		commitDateProperty.setDataPropertyType(DataPropertyType.STRING);
+		return commitDateProperty;
+	}
 
 	private Data createData(DataProperty urlProperty,
 			DataProperty committerNameProperty,
-			DataProperty committerMessageProperty) {
+			DataProperty committerMessageProperty, DataProperty commitDateDateProperty) {
 		Set<DataProperty> commitPropertiesSet = new HashSet<DataProperty>();
 		commitPropertiesSet.add(urlProperty);
 		commitPropertiesSet.add(committerNameProperty);
 		commitPropertiesSet.add(committerMessageProperty);
+		commitPropertiesSet.add(commitDateDateProperty);
 		Data data = new Data();
 		data.setFields(commitPropertiesSet);
 		data.setDataType(DataType.COMMIT);
