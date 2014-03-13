@@ -17,12 +17,12 @@ privileged aspect DataCollection_Roo_JavaBean {
         this.data = data;
     }
     
-    public String DataCollection.getChanelName() {
-        return this.chanelName;
+    public String DataCollection.getChannelName() {
+        return this.channelName;
     }
     
-    public void DataCollection.setChanelName(String chanelName) {
-        this.chanelName = chanelName;
+    public void DataCollection.setChannelName(String channelName) {
+        this.channelName = channelName;
     }
     
 }

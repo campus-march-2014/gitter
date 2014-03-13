@@ -22,7 +22,7 @@ public class DataCollection {
 
     /**
      */
-    private String chanelName;
+    private String channelName;
     
     @Override
     public String toString() {

@@ -61,7 +61,7 @@ public class GithubDataProvider implements DataProvider {
 		pushString = pushString.replaceAll("\\s", " ");
 //		pushString = pushString.replaceAll("(?=[]\\[+&|!(){}^\"~*?:\\\\-])", "\\\\");
 //		pushString = pushString.substring(0, 100);
-		String channelName = dataCollection.getChanelName();
+		String channelName = dataCollection.getChannelName();
 		channelName = "test";
 		pushMessageToChannel(pushString, channelName);
 	}

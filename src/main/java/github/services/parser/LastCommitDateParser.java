@@ -22,20 +22,19 @@ import org.codehaus.jackson.type.TypeReference;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class LastCommitDateParser implements Parser {
 
 	@Override
 	public DataCollection parseData(String stringResorces) {
 		JsonFactory factory = new JsonFactory();
 		ObjectMapper mapper = new ObjectMapper(factory);
-		TypeReference<ArrayList<Object>> typeRef = new TypeReference<ArrayList<Object>>() {
-		};
+		TypeReference<ArrayList<Object>> typeRef = new TypeReference<ArrayList<Object>>() {};
 		DataCollection dataCollection = new DataCollection();
 		try {
-			ArrayList<Object> objects = mapper.readValue(stringResorces,
-					typeRef);
+			ArrayList<Object> objects = mapper.readValue(stringResorces,typeRef);
 			List<Data> listData = new ArrayList<Data>();
 
 			String lastCommitDate = getLastCommitDate(objects);
@@ -57,12 +56,9 @@ public class LastCommitDateParser implements Parser {
 	}
 
 	private String getLastCommitDate(ArrayList<Object> objects) {
-		HashMap<String, Object> hashMap = (HashMap<String, Object>) objects
-				.get(0);
-		HashMap<String, Object> commit = (HashMap<String, Object>) hashMap
-				.get("commit");
-		HashMap<String, Object> committer = (HashMap<String, Object>) commit
-				.get("committer");
+		HashMap<String, Object> hashMap = (HashMap<String, Object>) objects.get(0);
+		HashMap<String, Object> commit = (HashMap<String, Object>) hashMap.get("commit");
+		HashMap<String, Object> committer = (HashMap<String, Object>) commit.get("committer");
 		String lastCommitDate = (String) committer.get("date");
 		return lastCommitDate;
 	}
