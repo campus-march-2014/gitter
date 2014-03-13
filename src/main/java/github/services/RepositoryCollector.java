@@ -43,7 +43,7 @@ public class RepositoryCollector implements Collector {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void getRepoInfos(String resource) {
 		List<RepoInfo> repoInfos = RepoInfo.findAllRepoInfoes();
 		List<RepoInfo> repoInfosFromUrl = new ArrayList<RepoInfo>();
@@ -60,6 +60,7 @@ public class RepositoryCollector implements Collector {
 				repoInfosFromUrl.add(repoInfo);
 				if (!repoInfoAlreadyInDB(repoInfos, repoInfo)) {
 					repoInfo.persist();
+					
 				}
 			}
 			repoInfoNotInDB(repoInfosFromUrl, repoInfos);
