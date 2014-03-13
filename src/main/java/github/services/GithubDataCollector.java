@@ -62,7 +62,7 @@ public class GithubDataCollector implements DataCollector {
 	
 	private String getCommitJson(RepoInfo repoInfo) throws MalformedURLException, IOException {
 		DefaultReader reader = new DefaultReader();
-		String resultingJson = reader.readResource(makeCommitUrl(GITHUB_BASE_URL, repoInfo.getDateTypes()));
+		String resultingJson = reader.readResource(makeCommitUrl(repoInfo.getBaseURL(), repoInfo.getDateTypes()));
 		return resultingJson;
 	}
 }

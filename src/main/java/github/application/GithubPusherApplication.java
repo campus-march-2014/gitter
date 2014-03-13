@@ -38,6 +38,7 @@ public class GithubPusherApplication {
         //List<RepoInfo> repoInfos = RepoInfo.findAllRepoInfoes();
     	//for(RepoInfo ri : repoInfos) {
     	RepoInfo ri = new RepoInfo();
+    	ri.setBaseURL("https://api.github.com/repos/campus-march-2014/gitter");
     	Set<DataType> dataTypes = new HashSet<>();
     	dataTypes.add(DataType.COMMIT);
     	ri.setDateTypes(dataTypes);
