@@ -42,7 +42,7 @@ public class GithubPusherApplication {
     	dataTypes.add(DataType.COMMIT);
     	ri.setDateTypes(dataTypes);
     		DataCollection commitDataCollection = dataCollector.collectData(ri);
-    		String channelName = commitDataCollection.getChanelName();
+    		String channelName = commitDataCollection.getChannelName();
     		DataCollection lastCommitDate = datesOfLastSentCommits.get(channelName);
     		try {
     			if(lastCommitDate != null) {
@@ -60,7 +60,7 @@ public class GithubPusherApplication {
     				List<Data> lastCommitDateList = new ArrayList<Data>();
     				lastCommitDateList.add(zeroDateData);
     				lastCommitDate = new DataCollection();
-    				lastCommitDate.setChanelName(channelName);
+    				lastCommitDate.setChannelName(channelName);
     				lastCommitDate.setData(lastCommitDateList);
     			}
 			} catch (IllegalArgumentException e) {
