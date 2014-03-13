@@ -32,7 +32,7 @@ public class GithubPusherApplication {
     @Autowired
     private DataCollector dataCollector;
 
-    @Scheduled(fixedRate=120000)
+    @Scheduled(fixedRate=30000)
     public void run(){
         //List<RepoInfo> repoInfos = RepoInfo.findAllRepoInfoes();
     	//for(RepoInfo ri : repoInfos) {
@@ -62,6 +62,7 @@ public class GithubPusherApplication {
     				lastCommitDate = new DataCollection();
     				lastCommitDate.setChannelName(channelName);
     				lastCommitDate.setData(lastCommitDateList);
+    				datesOfLastSentCommits.put(channelName, lastCommitDate);
     			}
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
@@ -92,7 +93,8 @@ public class GithubPusherApplication {
         		newDateData.setFields(newDatePropertySet);
         		newDateData.setDataType(DataType.COMMIT);
         		lista1.add(newDateData);
-        		lastCommitDate.setData(lista1);
+        		//lastCommitDate.setData(lista1);
+        		datesOfLastSentCommits.get(channelName).setData(lista1);
     		} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
