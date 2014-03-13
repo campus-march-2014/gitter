@@ -2,7 +2,7 @@ package github.models;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
-
+import org.hibernate.annotations.NamedQuery;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +13,7 @@ import javax.persistence.ElementCollection;
 @RooJpaActiveRecord
 public class RepoInfo {
 
-    @Override
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

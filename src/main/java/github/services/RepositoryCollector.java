@@ -13,11 +13,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+//import org.h2.engine.Session;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SharedSessionContract;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -60,7 +67,6 @@ public class RepositoryCollector implements Collector {
 				repoInfosFromUrl.add(repoInfo);
 				if (!repoInfoAlreadyInDB(repoInfos, repoInfo)) {
 					repoInfo.persist();
-					
 				}
 			}
 			repoInfoNotInDB(repoInfosFromUrl, repoInfos);
