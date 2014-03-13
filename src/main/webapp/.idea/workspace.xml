@@ -67,7 +67,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="91" selection-start="3177" selection-end="3177" vertical-scroll-proportion="2.8482144" vertical-offset="0" max-vertical-offset="2574">
+            <state line="61" column="42" selection-start="0" selection-end="4565" vertical-scroll-proportion="0.3125" vertical-offset="1132" max-vertical-offset="2750">
               <folding />
             </state>
           </provider>
@@ -120,7 +120,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -131,7 +131,30 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToClass.includeLibraries" value="false" />
@@ -389,13 +412,13 @@
       <workItem from="1394573725897" duration="6243000" />
       <workItem from="1394624243011" duration="4773000" />
       <workItem from="1394633598676" duration="14649000" />
-      <workItem from="1394698433870" duration="4909000" />
-      <workItem from="1394707137371" duration="747000" />
+      <workItem from="1394698433870" duration="3769000" />
+      <workItem from="1394721671003" duration="4841000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42128000" />
+    <option name="totallyTimeSpent" value="45082000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
@@ -449,20 +472,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="91" selection-start="3177" selection-end="3177" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2574">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/jqote.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="42" selection-start="6151" selection-end="6151" vertical-scroll-proportion="0.0" vertical-offset="4092" max-vertical-offset="4488">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="64" column="34" selection-start="2295" selection-end="2295" vertical-scroll-proportion="0.0" vertical-offset="1132" max-vertical-offset="2398">
@@ -540,7 +549,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="91" selection-start="3177" selection-end="3177" vertical-scroll-proportion="2.8482144" vertical-offset="0" max-vertical-offset="2574">
+        <state line="61" column="42" selection-start="0" selection-end="4565" vertical-scroll-proportion="0.3125" vertical-offset="1132" max-vertical-offset="2750">
           <folding />
         </state>
       </provider>
