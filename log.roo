@@ -51,3 +51,4 @@ interface --class github.application.Applicatio
 interface --class github.application.Application
 entity jpa --class ~.application.GithubPusherApplication --implements ~.application.Application
 >>>>>>> 6457329df0bd83d11f3bf2412682b870099f87a0
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-03-13 16:03:51
