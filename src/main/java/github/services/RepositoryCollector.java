@@ -1,8 +1,7 @@
 package github.services;
 
-import github.models.DataType;
 import github.models.RepoInfo;
-import github.utils.Reader;
+import github.services.parser.DefaultReader;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,25 +19,15 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-//import org.h2.engine.Session;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SharedSessionContract;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
-import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.stereotype.Service;
 
-@RooJavaBean
-@RooToString
-@RooJpaActiveRecord
 @Service
 public class RepositoryCollector implements Collector {
 	public static final String url = "https://api.github.com/users/campus-march-2014/repos";
 
 	public void fetchRepositiries() {
-		Reader reader = new Reader();
+		DefaultReader reader = new DefaultReader();
 		try {
 			String resource = reader.readResource(new URL(url));
 			getRepoInfos(resource);

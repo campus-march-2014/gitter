@@ -413,12 +413,20 @@
       <workItem from="1394624243011" duration="4773000" />
       <workItem from="1394633598676" duration="14649000" />
       <workItem from="1394698433870" duration="3769000" />
+<<<<<<< HEAD
       <workItem from="1394721671003" duration="4841000" />
+=======
+      <workItem from="1394721671003" duration="4261000" />
+>>>>>>> database-working
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="45082000" />
+=======
+    <option name="totallyTimeSpent" value="44502000" />
+>>>>>>> database-working
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
