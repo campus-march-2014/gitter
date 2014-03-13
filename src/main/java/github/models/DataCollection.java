@@ -31,7 +31,7 @@ public class DataCollection {
     		if(d.getDataType() == DataType.COMMIT) {
     			stringBuilder.append("Commiter: " + d.getPropertyByName("CommitterName").getValue() + "\\n");
     			stringBuilder.append("CommitURL: " + d.getPropertyByName("CommitURL").getValue() + "\\n");
-    			stringBuilder.append("Message: " + d.getPropertyByName("CommitterMessage").getValue());
+    			stringBuilder.append("Message: " + d.getPropertyByName("CommitterMessage").getValue() + "\\n");
     		}
     	}
     	

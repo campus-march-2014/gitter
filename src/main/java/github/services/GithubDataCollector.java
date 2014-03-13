@@ -1,26 +1,19 @@
 package github.services;
 
-import java.io.BufferedReader;
+import github.models.DataCollection;
+import github.models.DataType;
+import github.models.RepoInfo;
+import github.services.parser.CommitParserImpl;
+import github.services.parser.Parser;
+import github.services.parser.DefaultReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Set;
 
-import javax.xml.bind.DatatypeConverter;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.stereotype.Service;
-
-import github.models.DataCollection;
-import github.models.DataType;
-import github.models.RepoInfo;
-import github.utils.Parser;
-import github.utils.Reader;
-import github.utils.impl.CommitParserImpl;
 
 @Service
 public class GithubDataCollector implements DataCollector {
@@ -68,7 +61,7 @@ public class GithubDataCollector implements DataCollector {
 	}
 	
 	private String getCommitJson(RepoInfo repoInfo) throws MalformedURLException, IOException {
-		Reader reader = new Reader();
+		DefaultReader reader = new DefaultReader();
 		String resultingJson = reader.readResource(makeCommitUrl(GITHUB_BASE_URL, repoInfo.getDateTypes()));
 		return resultingJson;
 	}
