@@ -30,35 +30,35 @@ public class CommitParserImpl implements Parser {
 		ObjectMapper mapper = new ObjectMapper(factory);
 		TypeReference<ArrayList<Object>> typeRef = new TypeReference<ArrayList<Object>>() {};
 		DataCollection dataCollection = new DataCollection();
-		try {	
+		try {
 			ArrayList<Object> objects = mapper.readValue(jsonString, typeRef);
-			String url="";
+			String url = "";
 			List<Data> list = new ArrayList<Data>();
 
 			for (int i = 0; i < objects.size(); i++) {
-				
-				HashMap<String, Object> hashMap = (HashMap<String, Object>) objects.get(i);
-				url = (String) hashMap.get("url");
+
+				HashMap<String, Object> commitsHashMap = (HashMap<String, Object>) objects.get(i);
+				url = (String) commitsHashMap.get("url");
 				DataProperty urlProperty = createUrlDataProperty(url);
 
-				HashMap<String, Object> commit = (HashMap<String, Object>) hashMap.get("commit");
-				HashMap<String, Object> committer = (HashMap<String, Object>) commit.get("committer");
-				
-				String committerName = (String) committer.get("name");
-				DataProperty committerNameProperty = createDataNameProperty(committerName);
-		
-				String commitDate = (String) committer.get("date");
-				DataProperty commitDateDataProperty = createDateDataProperty(commitDate);
-				
+				HashMap<String, Object> commit = (HashMap<String, Object>) commitsHashMap.get("commit");
 				String message = (String) commit.get("message");
 				DataProperty committerMessageProperty = createCommitterMessageProperty(message);
 
-				Data data = createData(urlProperty, committerNameProperty,committerMessageProperty, commitDateDataProperty);
-				
+				HashMap<String, Object> committer = (HashMap<String, Object>) commit.get("committer");
+				String committerName = (String) committer.get("name");
+				DataProperty committerNameProperty = createDataNameProperty(committerName);
+
+				String commitDate = (String) committer.get("date");
+				DataProperty commitDateDataProperty = createDateDataProperty(commitDate);
+
+				Data data = createData(urlProperty, committerNameProperty,
+						committerMessageProperty, commitDateDataProperty);
 				list.add(data);
 			}
-			getChanel(dataCollection, url);
+			getChannel(dataCollection, url);
 			dataCollection.setData(list);
+
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,14 +69,7 @@ public class CommitParserImpl implements Parser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return dataCollection;
-	}
-
-	private void getChanel(DataCollection dataCollection, String url) {
-		String[] splittedUrl = url.split("/");
-		String channel = splittedUrl[5];
-		dataCollection.setChanelName(channel);
 	}
 
 	private DataProperty createCommitterMessageProperty(String message) {
@@ -100,7 +93,7 @@ public class CommitParserImpl implements Parser {
 		urlProperty.setValue(url);
 		return urlProperty;
 	}
-	
+
 	private DataProperty createDateDataProperty(String lastCommitDate) {
 		DataProperty commitDateProperty = new DataProperty();
 		commitDateProperty.setName("CommitDate");
@@ -111,7 +104,8 @@ public class CommitParserImpl implements Parser {
 
 	private Data createData(DataProperty urlProperty,
 			DataProperty committerNameProperty,
-			DataProperty committerMessageProperty, DataProperty commitDateDateProperty) {
+			DataProperty committerMessageProperty,
+			DataProperty commitDateDateProperty) {
 		Set<DataProperty> commitPropertiesSet = new HashSet<DataProperty>();
 		commitPropertiesSet.add(urlProperty);
 		commitPropertiesSet.add(committerNameProperty);
@@ -121,6 +115,12 @@ public class CommitParserImpl implements Parser {
 		data.setFields(commitPropertiesSet);
 		data.setDataType(DataType.COMMIT);
 		return data;
+	}
+
+	private void getChannel(DataCollection dataCollection, String url) {
+		String[] splittedUrl = url.split("/");
+		String channel = splittedUrl[5];
+		dataCollection.setChannelName(channel);
 	}
 
 }
