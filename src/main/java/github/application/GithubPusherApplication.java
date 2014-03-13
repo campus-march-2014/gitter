@@ -44,9 +44,4 @@ public class GithubPusherApplication {
     		dataProvider.sendData(dataCollector.collectData(ri));
     	//}
     }
-//    @Scheduled(fixedRate=5000)
-//    public void stop() {
-//    	System.out.println("NESTO SE DOGADJA");
-//    }
-
 }
