@@ -54,45 +54,53 @@
         });
 
         $('.collect').click(function(){
-            var nazivi = "";
+            var allowedEvents = "";
             $('input[type=checkbox]').each(function () {
                 if(this.checked == true){
-                    var sThisVal = $(this).val();
-                    nazivi = nazivi.concat(sThisVal).concat(',');
+                    var checkboxValue = $(this).val();
+                    allowedEvents = allowedEvents.concat(checkboxValue).concat(',');
                 }
             });
-            console.log(nazivi);
-            $.post("gitter/fetchFromUI", { proba: nazivi });
+            console.log(allowedEvents);
+            $.post("gitter/fetchFromUI", { collectedEvents: allowedEvents });
 
         });
 
         $.get('gitter/fetchAll').done(function(data){
-
             console.log(data);
-            var $prvi = "";
-            var $drugi = "";
+            var $repoInfo = "";
+            var $dataType = "";
             $.each(data, function(key, value){
                 if(key == 'repoInfo'){
-                    $prvi  = value;
+                    $repoInfo  = value;
                 }
                 if(key == 'dataType'){
-                    $drugi = value;
+                    $dataType = value;
                 }
             });
 
-            $.each($prvi, function( index, element ) {
+            $.each($repoInfo, function( index, element ) {
+                var $urlRepo;
                 $.each(element, function(key, value){
                     if(key == 'baseURL'){
-                        var $ime = value.split("/");
-                        var $row = '<tr><td>'.concat($ime[$ime.length-1]).concat('</td><td>');
+                        $urlRepo = value;
+                        var $baseURLsplit = value.split("/");
+                        var $row = '<tr><td>'.concat($baseURLsplit[$baseURLsplit.length-1]).concat('</td><td>');
                         var $events="";
-                        $.each($drugi, function(index, newElement){
+                        $.each($dataType, function(index, newElement){
                            var $boxValue = value.concat((';')).concat(newElement);
                             $events = ' <label class="checkbox-inline"><input type="checkbox" value="'.concat($boxValue).concat('">').concat(newElement).concat('</label>');
                             $row = $row.concat($events);
                         });
                         $row.concat('</td></tr>');
                         $('#repositories tbody').append($row);
+                    }
+                    if (key == 'dateTypes') {
+                        $.each(value, function(indexEvent, event) {
+                            var $boxValue = "";
+                            $boxValue = $urlRepo.concat(';').concat(event);
+                            $(':checkbox[value="'.concat($boxValue).concat('"]')).prop('checked', true);
+                        });
                     }
                 });
             });
