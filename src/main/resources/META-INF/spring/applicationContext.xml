@@ -67,4 +67,6 @@
         <property name="persistenceUnitName" value="persistenceUnit"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
+    <bean class="github.services.GithubDataCollector" id="dataCollector"/>
+    <bean class="github.services.GithubDataProvider" id="githubDataProvider"/>
 </beans>

@@ -21,10 +21,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.stereotype.Service;
 
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
+@Service
 public class GithubDataProvider implements DataProvider {
 	private final String APPLICATION_ID = "b4de07150619";
 	private final String SERVICE_CHANNELS_LIST_URL = "https://pushapi.infobip.com/1/application/" + APPLICATION_ID + "/channels";
@@ -67,6 +69,7 @@ public class GithubDataProvider implements DataProvider {
 	private void pushData(DataCollection dataCollection) {
 		String pushString = dataCollection.toString();
 		String channelName = dataCollection.getChanelName();
+		channelName = "test";
 		pushMessageToChannel(pushString, channelName);
 	}
 	
