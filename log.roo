@@ -44,3 +44,4 @@ entity jpa --class github.services.impl.GithubDataProvider --implements ~.servic
 interface --class github.application.Applicatio
 interface --class github.application.Application
 entity jpa --class ~.application.GithubPusherApplication --implements ~.application.Application
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-03-13 16:08:59
