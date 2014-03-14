@@ -45,12 +45,9 @@ public class RepoInfo {
 		return true;
 	}
 
-	/**
-     */
+	
     private String baseURL;
 
-    /**
-     */
     @ElementCollection
     private Set<DataType> dateTypes = new HashSet<DataType>();
     
